@@ -16,6 +16,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [editingUser, setEditingUser] = useState(null);
+  const [selectedRowCount, setSelectedRowCount] = useState(0);
 
   const usersPerPage = 10;
 
@@ -41,6 +42,8 @@ const App = () => {
       : [...selectedRows, userId];
 
     setSelectedRows(newSelectedRows);
+
+    setSelectedRowCount(newSelectedRows.length);
   };
 
   const handleSelectAll = () => {
@@ -48,6 +51,7 @@ const App = () => {
     setSelectedRows(
       selectedRows.length === allUserIds.length ? [] : allUserIds,
     );
+    setSelectedRowCount(users.length-1);
   };
 
   const handleDeleteSelected = () => {
@@ -196,7 +200,7 @@ const App = () => {
         />
         <FaAngleLeft
           onClick={() => {
-            if (currentPage > 1) setCurrentPage(currentPage - 1);
+            if (currentPage > 1) setCurrentPage(currentPage-1);
           }}
           className="previous-page"
         />
@@ -268,6 +272,7 @@ const App = () => {
         <tbody>{renderTableRows()}</tbody>
       </table>
       <div className="wrap">
+      <span style={{color:"#b3b1b1", fontSize:"13px"}}>{`${selectedRowCount} out of ${users.length-1} rows selected`}</span>
         <div className="pagination">{renderPaginationButtons()}</div>
       </div>
     </div>
